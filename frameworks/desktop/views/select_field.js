@@ -123,7 +123,7 @@ SC.SelectFieldView = SC.FieldView.extend(
       var fieldValue = this.get('value') ;
       var el, selectElement;
 
-      if ( !this.get('isEnabled') ) context.attr('disabled','disabled');
+      context.attr('disabled',this.get('isEnabled') ? null : 'disabled');
         
       // get the localization flag.
       var shouldLocalize = this.get('localize'); 
