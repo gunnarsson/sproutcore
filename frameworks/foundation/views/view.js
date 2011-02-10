@@ -2277,7 +2277,7 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
       // frame changes should be sent all the time unless this property is 
       // present to indicate that we want the old 1.0 API behavior instead.
       // 
-      if (!cv.hasStaticLayout) {
+      if (cv && !cv.hasStaticLayout) {
         cv.notifyPropertyChange('clippingFrame') ;
         cv._sc_view_clippingFrameDidChange();
       }
