@@ -176,7 +176,7 @@ SC.SelectFieldView = SC.FieldView.extend(
           if (!emptyName && index === 0 && fieldValue === '***') {
             this.set('value', value);
           }
-          if (value) value = (SC.guidFor(value)) ? SC.guidFor(value) : value.toString() ;
+          if (value !== null && value !== undefined) value = (SC.guidFor(value)) ? SC.guidFor(value) : value.toString() ;
    
           // render HTML
           var disable = (this.validateMenuItem && this.validateMenuItem(value, name)) ? '' : 'disabled="disabled" ' ;
@@ -240,6 +240,10 @@ SC.SelectFieldView = SC.FieldView.extend(
 
 
     
+  _isEnabledObserver: function() {
+    this.set('cpDidChange', YES);
+  }.observes('isEnabled'),
+
   acceptsFirstResponder: function() {
     return this.get('isEnabled');
   }.property('isEnabled'),
@@ -281,12 +285,12 @@ SC.SelectFieldView = SC.FieldView.extend(
       
       while(!found && (--loc >= 0)) {
         object = objects.objectAt? objects.objectAt(loc) : objects[loc] ;
-        if (!object) continue; // null means placeholder; just skip
+        if (object === null || object === undefined) continue; // null means placeholder; just skip
       
         // get value using valueKey if there is one or use object
         // map to _guid or toString.
         if (valueKey) object = (object.get) ? object.get(valueKey) : object[valueKey] ;
-        var ov = (object) ? (SC.guidFor(object) ? SC.guidFor(object) : object.toString()) : null ;
+        var ov = (object !== null && object !== undefined) ? (SC.guidFor(object) ? SC.guidFor(object) : object.toString()) : null ;
       
         // use this object value if it matches.
         if (value == ov) found = object ;
@@ -300,7 +304,7 @@ SC.SelectFieldView = SC.FieldView.extend(
     if (SC.none(newValue)) { 
       newValue = '***' ; 
     } else {
-      newValue = ((newValue) ? (SC.guidFor(newValue) ? SC.guidFor(newValue) : newValue.toString()) : null );
+      newValue = ((newValue !== null && newValue !== undefined) ? (SC.guidFor(newValue) ? SC.guidFor(newValue) : newValue.toString()) : null );
     }
     this.$input().val(newValue);
     return this ;

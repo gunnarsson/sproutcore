@@ -1524,7 +1524,7 @@ SC.CollectionView = SC.View.extend(
   /** 
     Primtive to remove the indexes from the selection.  
     
-    @param {Number|SC.IndexSet} indexes index or indexes to select
+    @param {Number|SC.IndexSet} indexes index or indexes to deselect
     @returns {SC.CollectionView} receiver
   */
   deselect: function(indexes) {
@@ -1874,7 +1874,17 @@ SC.CollectionView = SC.View.extend(
     this.select(sel, NO) ;
     return YES ;
   },
-  
+
+  /** @private
+    Remove selection of any selected items.
+  */
+  deselectAll: function() {
+    var content = this.get('content'),
+        sel = content ? SC.IndexSet.create(0, content.get('length')) : null;
+    this.deselect(sel, NO) ;
+    return YES ;
+  },
+
   /** @private
     Handle delete keyboard event.
   */
