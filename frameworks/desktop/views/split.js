@@ -519,6 +519,11 @@ SC.SplitView = SC.View.extend(
     } else {
       // uncollapse to the last thickness in it's uncollapsed state
       if (view === this._topLeftView) {
+
+          if (!this._uncollapsedThickness) {
+              this._uncollapsedThickness = this.defaultThickness;
+          }
+
         this._updateTopLeftThickness(this._uncollapsedThickness) ;
       } else {
         this._updateBottomRightThickness(this._uncollapsedThickness) ;
