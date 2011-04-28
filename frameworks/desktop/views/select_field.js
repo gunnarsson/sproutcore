@@ -180,13 +180,16 @@ SC.SelectFieldView = SC.FieldView.extend(
    
           // render HTML
           var disable = (this.validateMenuItem && this.validateMenuItem(value, name)) ? '' : 'disabled="disabled" ' ;
+
           if(firstTime){
             context.push('<option '+disable+'value="'+value+'">'+name+'</option>') ;
           } else{
             el=document.createElement('option');
             el.value=value;
             el.innerHTML=name;
-            if(disable.length>0) el.disable="disabled";
+            if(disable.length>0) {
+                el.disabled="disabled";
+            }
             selectElement.appendChild(el);
           }
         // null value means separator.
