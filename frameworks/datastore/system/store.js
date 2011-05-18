@@ -1067,7 +1067,7 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
   createRecord: function(recordType, dataHash, id) {
     var primaryKey, storeKey, status, K = SC.Record, changelog, defaultVal,
         ret;
-    
+
     // First, try to get an id.  If no id is passed, look it up in the 
     // dataHash.
     if (!id && (primaryKey = recordType.prototype.primaryKey)) {
@@ -1665,7 +1665,9 @@ SC.Store = SC.Object.extend( /** @scope SC.Store.prototype */ {
         this.changelog = null;
       }
       else {
-        this.changelog.removeEach(storeKeys);
+        if (this.changelog) {
+          this.changelog.removeEach(storeKeys);
+        }
       }
     }
     return ret ;
