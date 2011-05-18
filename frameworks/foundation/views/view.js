@@ -320,6 +320,9 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
 
       var childViews = this.get('childViews'), len = childViews.length, idx;
       for(idx=0;idx<len;idx++) {
+        if (!childViews[idx]) {
+            continue;
+        }
         childViews[idx].recomputeIsVisibleInWindow(current);
       }
 
@@ -599,6 +602,9 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
     
     for (idx=0; idx<len; ++idx) {
       childView = childViews[idx];
+      if (!childView) {
+          continue;
+      }
       if (childView._invalidatePaneCacheForSelfAndAllChildViews) {
         childView._invalidatePaneCacheForSelfAndAllChildViews();
       } 
@@ -1131,6 +1137,9 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
     var i=0, child, childLen, children = this.get('childViews');
     for(i=0, childLen=children.length; i<childLen; i++) {
       child = children[i];
+      if (!child) {
+          continue;
+      }
       if(child._notifyDidAppendToDocument){
         child._notifyDidAppendToDocument();
       }
@@ -1476,7 +1485,11 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
   nextValidKeyView: function() {
     var seen = [], 
         rootView = this.get('pane'), ret = this.get('nextKeyView');
-    
+
+    if (!rootView && !ret) {
+        return null;
+    }
+      
     if(!ret) ret = rootView._computeNextValidKeyView(this, seen);
     
     if(SC.TABBING_ONLY_INSIDE_DOCUMENT && !ret) {
@@ -1527,6 +1540,11 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
   previousValidKeyView: function() {
     var seen = [],
         rootView = this.pane(), ret = this.get('previousKeyView'); 
+
+    if (!rootView && !ret) {
+      return null;
+    }
+
     if(!ret) ret = rootView._computePreviousValidKeyView(this, seen);
     return ret ;
   }.property('previousKeyView'),
@@ -2359,6 +2377,9 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
     var cv = this.childViews, len = cv.length, idx, view ;
     for (idx=0; idx<len; ++idx) {
       view = cv[idx];
+      if (!view) {
+          continue;
+      }
       view.parentViewDidResize();
     }
   },
