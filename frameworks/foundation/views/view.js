@@ -1304,7 +1304,7 @@ SC.View = SC.Responder.extend(SC.DelegateSupport,
       if (!node) {
         this.createLayer() ;
         node = this.get('layer') ;
-        if (!node) return; // can't do anything without a node.
+        if (!node) return null; // can't do anything without a node.
       }
       
       var siblings = parentView.get('childViews'),
