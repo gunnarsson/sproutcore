@@ -782,7 +782,9 @@ SC.TextFieldView = SC.FieldView.extend(SC.StaticLayout, SC.Editable,
   },
   
   willLoseKeyResponderTo: function(responder) {
-    //if (this._isFocused) this._isFocused = NO ;
+      if (SC.browser.mozilla) {
+          this.fieldValueDidChange();
+      }
   },
 
   // In IE, you can't modify functions on DOM elements so we need to wrap the
